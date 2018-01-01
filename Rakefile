@@ -122,15 +122,18 @@ namespace "author" do
   desc 'Push changes to the GitHub Repository'
   task :publish => ["ci:test"] do
     puts "Publishing Changes ..."
+    time = Time.new
+
     %x{git add -A && git commit -m "Autopush by Rakefile at #{time}"}
     %x{git push origin master}
-
-    time = Time.new
   end
 end
 
 # Tasks in the top-level namespace
+desc 'Shorthand for ci:deploy'
 task :deploy => ["ci:deploy"]
+
+desc 'Shorthand for author:post'
 task :post, [:date, :title, :post] do |t, args|
   Rake::Task["author:post"].invoke(args[:date], args[:title], args[:post])
 end
