@@ -28,6 +28,8 @@ theme: minima
 plugins:
   - jekyll-feed
 exclude:
+  - Rakefile
   - Gemfile
   - Gemfile.lock
   - vendor
+  - readme.md
