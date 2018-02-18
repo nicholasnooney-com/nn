@@ -38,7 +38,11 @@ namespace "ci" do
 
   desc 'Preview the Site'
   task :preview => [:clean] do
-    jekyll('serve')
+    if File.exist?('env/localhost.key') && File.exist?('env/localhost.crt') then
+      jekyll('serve --ssl-cert env/localhost.crt --ssl-key env/localhost.key')
+    else
+      jekyll('serve')
+    end
   end
   task :serve => [:preview]
 
