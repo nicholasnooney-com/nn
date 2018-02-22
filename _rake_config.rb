@@ -12,3 +12,9 @@ $POST_DIR = "_posts/"
 # $POST_EXT is the extenstion used when creating new posts.
 # Default Value: ".md"
 $POST_EXT = ".md"
+
+# $SSL_CERT is the certificate file used for enabling SSL.
+$SSL_CERT = "env/ssl/devCA.crt"
+
+# $SSL_KEY is the private key file corresponding to $SSL_CERT.
+$SSL_KEY = "env/ssl/devCA.key"
