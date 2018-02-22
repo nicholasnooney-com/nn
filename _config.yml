@@ -28,6 +28,8 @@ markdown: kramdown
 theme: jekyll-theme-nn
 plugins:
   - jekyll-feed
+include:
+  - _pages
 exclude:
   - Rakefile
   - Gemfile
