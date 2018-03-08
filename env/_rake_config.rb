@@ -1,3 +1,4 @@
+# coding: utf-8
 # Rake Configuration File. This file contains variables to override defaults in
 # the Rakefile.
 
@@ -18,3 +19,9 @@ $SSL_CERT = "env/ssl/devCA.crt"
 
 # $SSL_KEY is the private key file corresponding to $SSL_CERT.
 $SSL_KEY = "env/ssl/devCA.key"
+
+# $SERVER_ADDR is the address for the development server.
+$SERVER_ADDR = "localhost"
+
+# $SERVER_PORT is the port for the development server.
+$SERVER_PORT = "4000"

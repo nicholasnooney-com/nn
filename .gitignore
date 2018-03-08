@@ -1,4 +1,7 @@
-env
 _site
 .sass-cache
 .jekyll-metadata
+
+env/ssl/devCA.crt
+env/ssl/devCA.key
+env/logs

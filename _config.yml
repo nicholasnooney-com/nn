@@ -14,14 +14,20 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Nicholas Nooney's Blog
+author: Nicholas Nooney
 email: nicholasnooney@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  The blog of Nicholas Nooney
+  A Collection of Ideas and Writings
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://blog.nicholasnooney.com"
+url: "blog.nicholasnooney.com"
 
 # Site settings for jekyll-theme-nn
 favicon: /assets/images/favicon.png
+logo: /assets/images/logo-blue.svg
+logo_alt: "The Square Nooney Logo"
+
+github_username: nnooney
+twitter_username: nicholasnooney
 
 # Build settings
 markdown: kramdown

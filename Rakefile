@@ -4,7 +4,7 @@ task :default => [:list_tasks]
 require 'html-proofer'
 
 # Load configuration variables, and provide defaults for unspecified variables
-load '_rake_config.rb' if File.exist?('_rake_config.rb')
+load 'env/_rake_config.rb' if File.exist?('env/_rake_config.rb')
 
 $SITE_DIR ||= "_site/"
 $POST_DIR ||= "_posts/"
@@ -14,16 +14,28 @@ $SSL_CONF ||= "env/ssl/localhost.conf"
 $SSL_CERT ||= nil
 $SSL_KEY  ||= nil
 
+$SERVER_ADDR ||= "localhost"
+$SERVER_PORT ||= "4000"
+
 # Tasks related to building and testing the site. These tasks run both locally
 # and on the server as part of the continuous integration pipeline.
 namespace "ci" do
   desc 'Build the Site (Incremental)'
-  task :build do
-    jekyll('build -d ' + $SITE_DIR)
+  task :build, [:env] do |t, args|
+    # Development is the default environment. This is to match the same behavior
+    # as Jekyll. Other tasks depend on "dev" as the default environment.
+    args.with_defaults(:env => 'dev')
+    configFiles = [
+        "_config.yml"
+    ]
+    if File.exist?("env/_config_#{args.env}.yml") then
+        configFiles.push("env/_config_#{args.env}.yml")
+    end
+    jekyll('build -d ' + $SITE_DIR + ' --config ' + configFiles.join(","))
   end
 
   desc 'Build the Site (From Scratch)'
-  task :rebuild => [:clean, :build]
+  task :rebuild, [:env] => [:clean, :build]
 
   desc 'Test the currently built Site'
   task :test do
@@ -41,7 +53,7 @@ namespace "ci" do
   end
 
   desc 'Deploy the Site (clean, build, test)'
-  task :deploy => [:clean, :build, :test] do
+  task :deploy, [:env] => [:clean, :build, :test] do
     puts "Build Complete!"
   end
 
@@ -83,13 +95,22 @@ namespace "dev" do
        -out #{$SSL_CERT} -keyout #{$SSL_KEY} -days 365}
   end
 
+  # The :preview task intentionally rebuilds the site with the default "dev"
+  # environment.
   desc 'Preview the Site'
-  task :preview => ["ci:clean"] do
+  task :preview => ["ci:rebuild"] do
+    opts = [
+        "-R env/server/config.ru",
+        "-a #{$SERVER_ADDR}",
+        "-p #{$SERVER_PORT}"
+    ]
     if File.exist?($SSL_CERT) && File.exist?($SSL_KEY) then
-      jekyll('serve --ssl-cert ' + $SSL_CERT + ' --ssl-key ' + $SSL_KEY)
-    else
-      jekyll('serve')
+      opts.push("--ssl")
+      opts.push("--ssl-cert-file #{$SSL_CERT}")
+      opts.push("--ssl-key-file #{$SSL_KEY}")
     end
+
+    bundle_exec("thin start " + opts.join(" "))
   end
   task :serve => [:preview]
 end
@@ -173,11 +194,11 @@ end
 # Tasks in the main namespace
 namespace "m" do
   desc 'Shorthand for ci:deploy'
-  task :deploy => ["ci:deploy"]
+  task :deploy, [:env] => ["ci:deploy"]
 
   desc 'Shorthand for author:post'
-  task :post, [:date, :title, :post] do |t, args|
-    Rake::Task["author:post"].invoke(args[:date], args[:title], args[:post])
+  task :post, [:date, :title, :category] do |t, args|
+    Rake::Task["author:post"].invoke(args[:date], args[:title], args[:category])
   end
 end
 
