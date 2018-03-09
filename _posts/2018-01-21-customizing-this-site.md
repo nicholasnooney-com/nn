@@ -69,6 +69,6 @@ would like to understand the specifics of each layout.
 [theme-github]: https://github.com/nnooney/jekyll-theme-nn
 [liquid-docs]: https://shopify.github.io/liquid/
 [vars]: https://jekyllrb.com/docs/variables/
-[page-source]: https://github.com/nnooney/nn/blob/master/_posts/2018-01-21-customizing-the-design-of-this-site.md
+[page-source]: https://github.com/nnooney/nn/blob/master/_posts/2018-01-21-customizing-this-site.md
 [template-source]: https://github.com/nnooney/jekyll-theme-nn/blob/master/_layouts/post.html
 [bulma]: https://bulma.io
