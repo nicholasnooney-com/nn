@@ -20,3 +20,4 @@ this-site
 - Assets 3 Pipeline
 - Pagination
 - Text Search
+- Open Graph for sharing contents
