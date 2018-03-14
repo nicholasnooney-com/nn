@@ -20,4 +20,5 @@ this-site
 - Assets 3 Pipeline
 - Pagination
 - Text Search
+- Code Syntax Highlighting
 - Open Graph for sharing contents
