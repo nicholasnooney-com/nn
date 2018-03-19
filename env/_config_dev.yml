@@ -1,0 +1,16 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
+# Development Settings Override
+# These are used to override settings placed in the regular _config.yml.
+
+# Use the local URL. Note that these settings match the $SERVER_ADDR and
+# $SERVER_PORT from _rake_config.rb located in this directory.
+url: "localhost:4000"

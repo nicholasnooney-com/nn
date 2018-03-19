@@ -3,6 +3,7 @@ layout: post
 title: "The Creation of this Site"
 date: 2017-12-31
 category: web
+tags: this-site
 ---
 
 So I just setup a new blog for myself, and after looking at the numerous options

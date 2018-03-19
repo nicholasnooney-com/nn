@@ -4,22 +4,38 @@ task :default => [:list_tasks]
 require 'html-proofer'
 
 # Load configuration variables, and provide defaults for unspecified variables
-load '_rake_config.rb' if File.exist?('_rake_config.rb')
+load 'env/_rake_config.rb' if File.exist?('env/_rake_config.rb')
 
 $SITE_DIR ||= "_site/"
 $POST_DIR ||= "_posts/"
 $POST_EXT ||= ".md"
 
+$SSL_CONF ||= "env/ssl/localhost.conf"
+$SSL_CERT ||= nil
+$SSL_KEY  ||= nil
+
+$SERVER_ADDR ||= "localhost"
+$SERVER_PORT ||= "4000"
+
 # Tasks related to building and testing the site. These tasks run both locally
 # and on the server as part of the continuous integration pipeline.
 namespace "ci" do
   desc 'Build the Site (Incremental)'
-  task :build do
-    jekyll('build -d ' + $SITE_DIR)
+  task :build, [:env] do |t, args|
+    # Development is the default environment. This is to match the same behavior
+    # as Jekyll. Other tasks depend on "dev" as the default environment.
+    args.with_defaults(:env => 'dev')
+    configFiles = [
+        "_config.yml"
+    ]
+    if File.exist?("env/_config_#{args.env}.yml") then
+        configFiles.push("env/_config_#{args.env}.yml")
+    end
+    jekyll('build -d ' + $SITE_DIR + ' --config ' + configFiles.join(","))
   end
 
   desc 'Build the Site (From Scratch)'
-  task :rebuild => [:clean, :build]
+  task :rebuild, [:env] => [:clean, :build]
 
   desc 'Test the currently built Site'
   task :test do
@@ -36,14 +52,8 @@ namespace "ci" do
     end
   end
 
-  desc 'Preview the Site'
-  task :preview => [:clean] do
-    jekyll('serve')
-  end
-  task :serve => [:preview]
-
   desc 'Deploy the Site (clean, build, test)'
-  task :deploy => [:clean, :build, :test] do
+  task :deploy, [:env] => [:clean, :build, :test] do
     puts "Build Complete!"
   end
 
@@ -51,6 +61,58 @@ namespace "ci" do
   task :clean do
     jekyll('clean')
   end
+end
+
+# Tasks related to setting up the development environment
+namespace "dev" do
+  desc 'Generate self-signed SSL Cert via OpenSSL'
+  task :ssl do
+    # Ensure all necessary variables are defined
+    if defined?($SSL_CONF).nil? || defined?($SSL_CERT).nil? || defined?($SSL_KEY).nil?
+      puts "Error: Missing Variables"
+      puts "Please ensure $SSL_CONF, $SSL_CERT, and $SSL_KEY are defined"
+      exit 1
+    end
+
+    # Ensure no key already exists
+    if File.exist?($SSL_CERT) || File.exist?($SSL_KEY) then
+      puts "Error: Certificate Already Exists"
+      puts "If you want to run this command, remove '" + $SSL_CERT + "' and"
+      puts "'" + $SSL_KEY + "' and run this command again"
+      exit 1
+    end
+    Dir.mkdir('env') unless File.exist?('env')
+
+    # I use the following options with this command
+    # Country Name: US
+    # State or Province Name: .
+    # Locality Name: .
+    # Organization Name: .
+    # Organizational Unit Name: .
+    # Common Name: localhost
+    # Email Address: .
+    %x{openssl req -config #{$SSL_CONF} -new -x509 -sha256 -newkey rsa:2048 -nodes \
+       -out #{$SSL_CERT} -keyout #{$SSL_KEY} -days 365}
+  end
+
+  # The :preview task intentionally rebuilds the site with the default "dev"
+  # environment.
+  desc 'Preview the Site'
+  task :preview => ["ci:rebuild"] do
+    opts = [
+        "-R env/server/config.ru",
+        "-a #{$SERVER_ADDR}",
+        "-p #{$SERVER_PORT}"
+    ]
+    if File.exist?($SSL_CERT) && File.exist?($SSL_KEY) then
+      opts.push("--ssl")
+      opts.push("--ssl-cert-file #{$SSL_CERT}")
+      opts.push("--ssl-key-file #{$SSL_KEY}")
+    end
+
+    bundle_exec("thin start " + opts.join(" "))
+  end
+  task :serve => [:preview]
 end
 
 # Tasks related to authoring content for the site
@@ -99,7 +161,7 @@ namespace "author" do
     # Generate the unique filename for the new post
     filename = post_date[0..9] + "-" + slugify(post_title) + $POST_EXT
     i = 1
-    while File.exists?($POST_DIR + filename)
+    while File.exist?($POST_DIR + filename)
       filename = post_date[0..9] + "-" +
         File.basename(slugify(post_title)) + "-" + i.to_s + $POST_EXT
       i += 1
@@ -119,23 +181,25 @@ namespace "author" do
     puts "Post created: \"#{$POST_DIR}#{filename}\""
   end
 
-  desc 'Push changes to the GitHub Repository'
+  desc 'Publish all changes (git push origin HEAD)'
   task :publish => ["ci:test"] do
     puts "Publishing Changes ..."
     time = Time.new
 
     %x{git add -A && git commit -m "Autopush by Rakefile at #{time}"}
-    %x{git push origin master}
+    %x{git push origin HEAD}
   end
 end
 
-# Tasks in the top-level namespace
-desc 'Shorthand for ci:deploy'
-task :deploy => ["ci:deploy"]
+# Tasks in the main namespace
+namespace "m" do
+  desc 'Shorthand for ci:deploy'
+  task :deploy, [:env] => ["ci:deploy"]
 
-desc 'Shorthand for author:post'
-task :post, [:date, :title, :post] do |t, args|
-  Rake::Task["author:post"].invoke(args[:date], args[:title], args[:post])
+  desc 'Shorthand for author:post'
+  task :post, [:date, :title, :category] do |t, args|
+    Rake::Task["author:post"].invoke(args[:date], args[:title], args[:category])
+  end
 end
 
 task :list_tasks do
