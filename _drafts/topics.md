@@ -3,7 +3,7 @@ layout: post
 title: "Topics to write about"
 date: 2018-02-24
 categories: ideas
-tags: []
+tags:
 ---
 
 - Cartographic Learning
