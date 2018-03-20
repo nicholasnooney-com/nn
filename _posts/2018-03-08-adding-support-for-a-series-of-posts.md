@@ -3,7 +3,7 @@ layout: post
 title: "Adding Support for a Series of Posts"
 date: 2018-03-08 09:45:52 -0500
 category: web
-tags: jekyll-theme, this-site
+tags: jekyll-theme this-site
 series: "Developing a Custom Theme"
 ---
 

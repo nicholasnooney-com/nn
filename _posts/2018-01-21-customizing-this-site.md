@@ -3,7 +3,7 @@ layout: post
 title: "Customizing the Design of this Site"
 date: 2018-01-21 22:56:26 -0500
 category: web
-tags: jekyll-theme, this-site
+tags: jekyll-theme this-site
 series: "Developing a Custom Theme"
 ---
 
