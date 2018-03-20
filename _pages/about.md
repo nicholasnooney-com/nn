@@ -1,7 +1,7 @@
 ---
 layout: page
-title: About
-long-title: About Me
+menu-title: About
+title: About Me
 permalink: /about/
 ---
 
