@@ -102,15 +102,17 @@ module Jekyll
       end
 
       # To process each series, loop over the series and create a new series
-      # page from it.
+      # page from it. Don't do it for group of posts that belong to no series.
       def process
         series.each do |s, posts|
           @series << SeriesPage.new(@site, s, posts) unless s.nil?
         end
       end
 
-      # Use Jekyll's site method 'post_attr_hash' to create an array of posts
-      # grouped by the 'series' tag in each post's frontmatter.
+      # Group each post by the 'series' attribute. This will create an array of
+      # posts with one entry for each value of the attribute encountered. Each
+      # entry looks like this:
+      #   {value: [Array of posts with that value]}
       def series
         @site.posts.docs.group_by { |p| p.data['series'] }
       end
