@@ -7,7 +7,13 @@ load 'env/_rake_config.rb' if File.exist?('env/_rake_config.rb')
 # Ensure $SITE_DIR is defined if not specified in env/_rake_config.rb
 $SITE_DIR ||= "_site/"
 
-logger = Logger.new("env/logs/server.log")
+# The Logfile is used to record HTTP interactions with the development server
+# for debugging purposes.
+$SERVER_LOG = "env/logs/server.log"
+$SERVER_DIR = File.dirname($SERVER_LOG)
+
+FileUtils.mkdir_p($SERVER_DIR) unless File.directory?($SERVER_DIR)
+logger = Logger.new($SERVER_LOG)
 use Rack::CommonLogger, logger
 
 # Set up the server handler
