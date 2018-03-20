@@ -29,7 +29,9 @@ logo: /assets/images/logo-blue.svg
 logo_alt: "The Square Nooney Logo"
 
 github_username: nnooney
+gitlab_username: nnooney
 twitter_username: nicholasnooney
+linkedin_username: nicholasnooney
 
 # Build settings
 markdown: kramdown

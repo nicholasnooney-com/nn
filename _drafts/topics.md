@@ -6,11 +6,14 @@ categories: ideas
 tags:
 ---
 
+projects
 - Cartographic Learning
 - YPP Solvers
 - sjoslag
 - LLVM Toolchain
+- Personal Home Library
 
+writings
 - Two plumbers working on missiles (ala Mario and Luigi)
 - Storytelling
 
