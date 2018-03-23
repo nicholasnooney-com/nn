@@ -52,3 +52,12 @@ exclude:
   - env
 
 strict_front_matter: true
+
+# Plugin settings
+jekyll-groupby:
+  permalink: ":group/:name.html"
+  groups:
+    series:
+      layout: "group"
+    category:
+      layout: "group"

@@ -7,6 +7,7 @@ gem "rake", "~> 12.0"
 gem "jekyll"
 gem "jekyll-theme-nn"
 #gem "jekyll-theme-nn", "~> 0.1", :path => "C:/Users/Nick/Documents/GitHub/jekyll-theme-nn"
+#gem "jekyll-theme-nn", "~> 0.1", :path => "/Users/nooney/Sites/jekyll-theme-nn"
 
 group :jekyll_plugins do
     gem "jekyll-feed", ">= 0.6"

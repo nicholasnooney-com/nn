@@ -1,32 +1,36 @@
-# A Plugin that will generate a series archive for each page that specifies the
+# A Plugin that will generate an archive page for any group of posts.
 # series: key in the post's frontmatter.
 require "jekyll"
 
 module Jekyll
-  module Series
-    class SeriesPage < Jekyll::Page
+  module Groupby
+    class GroupbyPage < Jekyll::Page
       attr_accessor :posts, :slug
 
       # Attributes for Liquid templates
       ATTRIBUTES_FOR_LIQUID = %w(
         posts
         title
+        key
+        slug
         name
         path
         url
         permalink
       ).freeze
 
-      # Initialize a new Series Page
+      # Initialize a new Groupby Page
       #
       # site - The Site object.
-      # title - The name of the series.
+      # title - The value of the key being grouped.
+      # key - The name of the key being grouped.
       # posts - The array of posts in this series.
-      def initialize(site, title, posts)
+      def initialize(site, title, key, posts)
         @site = site
         @posts = posts
         @title = title
-        @config = site.config["jekyll-series"]
+        @key = key
+        @config = site.config["jekyll-groupby"]
 
         # Generate slug for the title
         @slug = Utils.slugify(title)
@@ -46,8 +50,16 @@ module Jekyll
         @title
       end
 
+      def key
+        @key
+      end
+
+      def slug
+        @slug
+      end
+
       def layout
-        @config["layout"]
+        @config["groups"][@key]["layout"]
       end
 
       def permalink
@@ -56,8 +68,8 @@ module Jekyll
 
       def url
         @url ||= URL.new({
-            :template => "series/:name.html",
-            :placeholders => { :name => @slug },
+            :template => @config["permalink"],
+            :placeholders => { :group => @key, :name => @slug },
             :permalink => nil
           }).to_s
       rescue ArgumentError
@@ -70,51 +82,57 @@ module Jekyll
       end
 
       def inspect
-        "#<Jekyll:SeriesPage @title=\"#{@title}\">"
+        "#<Jekyll:GroupbyPage @path=\"#{@path}\">"
       end
     end
 
-    class Series < Jekyll::Generator
+    class Groupby < Jekyll::Generator
       safe true
 
       DEFAULTS = {
-        "layout" => "series"
+        "permalink" => ":group/:name.html",
+        "groups" => []
       }.freeze
 
       def initialize(config = nil)
-        @config = Utils.deep_merge_hashes(DEFAULTS, config.fetch("jekyll-series", {}))
+        @config = Utils.deep_merge_hashes(DEFAULTS, config.fetch("jekyll-groupby", {}))
       end
 
       # The provided generate method performs 3 steps:
       #   1. It resolves the configuration settings
-      #   2. It processes each series archive
-      #   3. It stores each series archive as a new page and in site.config.
+      #   2. It processes each groupby archive
+      #   3. It stores each groupby archive as a new page and in site.config.
       def generate(site)
         @site = site
         @posts = site.posts
-        @series = []
+        @group_pages = []
 
-        @site.config["jekyll-series"] = @config
-
+        @site.config["jekyll-groupby"] = @config
         process
-        @site.pages.concat(@series)
-        @site.config["series"] = @series
+        @site.pages.concat(@group_pages)
+        # @site.config["series"] = @series
       end
 
-      # To process each series, loop over the series and create a new series
-      # page from it. Don't do it for group of posts that belong to no series.
+      # To process each group archive, loop over each value and create a new
+      # groupby page from it. Don't do it for groups of posts that do not have
+      # the groupby key present.
       def process
-        series.each do |s, posts|
-          @series << SeriesPage.new(@site, s, posts) unless s.nil?
+        @config["groups"].each do |key, config|
+
+          Jekyll.logger.info "jekyll-groupby:", "Creating pages for \"#{key}\"."
+
+          groupBy(key).each do |val, posts|
+            @group_pages << GroupbyPage.new(@site, val, key, posts) unless val.nil?
+          end
         end
       end
 
-      # Group each post by the 'series' attribute. This will create an array of
+      # Group each post by the 'key' argument. This will create an array of
       # posts with one entry for each value of the attribute encountered. Each
       # entry looks like this:
       #   {value: [Array of posts with that value]}
-      def series
-        @site.posts.docs.group_by { |p| p.data['series'] }
+      def groupBy(key)
+        @site.posts.docs.group_by { |p| p.data[key] }
       end
     end
   end
