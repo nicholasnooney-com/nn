@@ -6,9 +6,10 @@ require 'html-proofer'
 # Load configuration variables, and provide defaults for unspecified variables
 load 'env/_rake_config.rb' if File.exist?('env/_rake_config.rb')
 
-$SITE_DIR ||= "_site/"
-$POST_DIR ||= "_posts/"
-$POST_EXT ||= ".md"
+$SITE_DIR  ||= "_site/"
+$POST_DIR  ||= "_posts/"
+$DRAFT_DIR ||= "_drafts/"
+$POST_EXT  ||= ".md"
 
 $SSL_CONF ||= "env/ssl/localhost.conf"
 $SSL_CERT ||= nil
@@ -118,32 +119,31 @@ end
 # Tasks related to authoring content for the site
 namespace "author" do
   desc 'Create a new post'
-  task :post, [:date, :title, :category] do |t, args|
+  task :post, [:title, :draft, :date] do |t, args|
     # Validate arguments to the create-post task
     if args.title == nil then
       puts "Error: No Title Specified"
-      puts "Usage: post[date,title,category]"
+      puts "Usage: post[title,draft,date]"
+      puts "  TITLE is a string"
+      puts "  DRAFT is a boolean (default false)"
       puts "  DATE is of the form YYYY-MM-DD; leave blank or nil for"
       puts "    today's date"
-      puts "  TITLE is a string"
-      puts "  CATEGORY is a string; leave blank or nil for no category"
       exit 1
     end
 
     if (args.date != nil and args.date != "nil" and args.date != "" and
       args.date.match(/[0-9]+-[0-9]+-[0-9]+/) == nil) then
       puts "Error: Invalid Date"
-      puts "Usage: post[date,title,category]"
+      puts "Usage: post[title,draft,date]"
+      puts "  TITLE is a string"
+      puts "  DRAFT is a boolean (default false)"
       puts "  DATE is of the form YYYY-MM-DD; leave blank or nil for"
       puts "    today's date"
-      puts "  TITLE is a string"
-      puts "  CATEGORY is a string; leave blank or nil for no category"
 
       puts "Example:"
-      puts "  post[\"\",\"#{args.title}\"]"
-      puts "  post[nil,\"#{args.title}\"]"
-      puts "  post[,\"#{args.title}\"]"
-      puts "  post[#{Time.new.strftime("%Y-%m-%d")},\"#{args.title}\"]"
+      puts "  post[\"#{args.title}\"]"
+      puts "  post[\"#{args.title}\",true]"
+      puts "  post[\"#{args.title}\",false,#{Time.new.strftime("%Y-%m-%d")}]"
       exit 1
     end
 
@@ -151,7 +151,11 @@ namespace "author" do
     post_title = args.title
     post_date = (args.date != "" and args.date != "nil" and args.date != nil) ?
       args.date : Time.new.strftime("%Y-%m-%d %H:%M:%S %z")
-    post_category = args.category
+    post_dir = $POST_DIR
+
+    if args.draft == "true" or args.draft == "True" then
+      post_dir = $DRAFT_DIR
+    end
 
     # A Helper function for generating a filename
     def slugify(title)
@@ -161,24 +165,24 @@ namespace "author" do
     # Generate the unique filename for the new post
     filename = post_date[0..9] + "-" + slugify(post_title) + $POST_EXT
     i = 1
-    while File.exist?($POST_DIR + filename)
+    while File.exist?(post_dir + filename)
       filename = post_date[0..9] + "-" +
         File.basename(slugify(post_title)) + "-" + i.to_s + $POST_EXT
       i += 1
     end
 
     # Create the new post
-    File.open($POST_DIR + filename, 'w') do |f|
+    File.open(post_dir + filename, 'w') do |f|
       f.puts "---"
       f.puts "layout: post"
       f.puts "title: \"#{post_title}\""
       f.puts "date: #{post_date}"
-      f.puts "category: #{post_category}"
+      f.puts "category:"
       f.puts "tags:"
       f.puts "---"
     end
 
-    puts "Post created: \"#{$POST_DIR}#{filename}\""
+    puts "Post created: \"#{post_dir}#{filename}\""
   end
 
   desc 'Publish all changes (git push origin HEAD)'
@@ -197,8 +201,8 @@ namespace "m" do
   task :deploy, [:env] => ["ci:deploy"]
 
   desc 'Shorthand for author:post'
-  task :post, [:date, :title, :category] do |t, args|
-    Rake::Task["author:post"].invoke(args[:date], args[:title], args[:category])
+  task :post, [:title, :draft, :date] do |t, args|
+    Rake::Task["author:post"].invoke(args[:title], args[:draft], args[:date])
   end
 end
 

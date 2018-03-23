@@ -10,6 +10,10 @@ $SITE_DIR = "_site/"
 # Default Value: "_posts/"
 $POST_DIR = "_posts/"
 
+# $DRAFT_DIR contains the directory to create new drafts in.
+# Default Value: "_drafts/"
+$DRAFT_DIR = "_drafts/"
+
 # $POST_EXT is the extenstion used when creating new posts.
 # Default Value: ".md"
 $POST_EXT = ".md"
