@@ -29,7 +29,13 @@ fearless and courageous hero who would fight for the Frigori and destroy the
 tzar in his palace on Intempilla. Its pages would be filled with excitement,
 unlike the only book we have now: _Divenon's Complete History_. I know that this
 book can't be complete like it's title says, since none of the stories my
-parents tell me are mentioned anywhere inside it.
+parents tell me are mentioned anywhere inside it. But I don't know that I can
+trust my parents' stories either, because they refuse to let me go outside.
+
+"It's too dangerous," they tell me each time I ask them. And when I point out
+that they leave our hovel, they say, "It's only so we can pick up food and items
+we need at the trading post." I used to ask if I could go with them, but they
+would end up right back at stage one, "It's too dangerous." It's too unfair.
 
 # Future Points
 
