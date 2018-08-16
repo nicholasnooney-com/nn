@@ -180,6 +180,8 @@ namespace "author" do
       f.puts "category:"
       f.puts "tags:"
       f.puts "---"
+      f.puts ""
+      f.puts "<!-- excerpt separator -->"
     end
 
     puts "Post created: \"#{post_dir}#{filename}\""

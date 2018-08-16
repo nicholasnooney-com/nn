@@ -17,6 +17,8 @@ this site much easier than throwing everything into a database and tweaking the
 inner workings of that. Operating Systems are better suited to handle files and
 folders rather than databases.
 
+<!-- excerpt separator -->
+
 So after searching around on the Internet to find the static site generator that
 was simple enough that I could comprehend how everything works behind the scenes
 (I like exploring how things work), I settled on Jekyll. Hugo was a close second

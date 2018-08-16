@@ -12,3 +12,5 @@ them, I can easily perform a complex series of commands to manage this site.
 Because Rake is so versatile in declaring targets, I use it to create new posts,
 run continuous integration, and even generate SSL Certificates for my local
 development environment.
+
+<!-- excerpt separator -->

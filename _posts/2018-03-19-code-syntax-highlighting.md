@@ -13,6 +13,8 @@ snippets were presented as black text on a grey background. To improve the
 visual appearance of code blocks, I decided to add code syntax highlighting
 with [Nord][nord-link].
 
+<!-- excerpt separator -->
+
 
 [nord-link]: https://arcticicestudio.github.io/nord/
 [post-link]: {{ site.baseurl }}{% link _posts/2018-01-21-customizing-this-site.md %}

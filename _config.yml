@@ -24,14 +24,16 @@ url: "blog.nicholasnooney.com"
 permalink: none
 
 # Site settings for jekyll-theme-nn
-favicon: /assets/images/favicon.png
-logo: /assets/images/logo-blue.svg
+favicon: favicon.png
+logo: logo-blue.svg
 logo_alt: "The Square Nooney Logo"
 
 github_username: nnooney
 gitlab_username: nnooney
 twitter_username: nicholasnooney
 linkedin_username: nicholasnooney
+
+excerpt_separator: <!-- excerpt separator -->
 
 # Build settings
 markdown: kramdown
@@ -63,3 +65,7 @@ jekyll-groupby:
       layout: "group"
     category:
       layout: "group"
+
+assets:
+  destination: "/assets/generated"
+  raw_precompile: [ "favicon.png" ]

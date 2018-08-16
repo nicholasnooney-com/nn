@@ -11,6 +11,8 @@ gem "jekyll-theme-nn"
 
 group :jekyll_plugins do
     gem "jekyll-feed", ">= 0.6"
+    gem "jekyll-assets", ">= 3.0"
+    gem "mini_magick"
 end
 
 # Development Gems

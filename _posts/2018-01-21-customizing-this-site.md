@@ -13,6 +13,8 @@ on behind the curtain. What exactly does Jekyll use to convert my markdown files
 into a complete static site? To learn about this, I made a custom theme for this
 site. The theme's source code is posted on [GitHub][theme-github].
 
+<!-- excerpt separator -->
+
 ### How do Jekyll Themes Work?
 
 Jekyll uses Ruby Gems to store themes. A theme is a collection of named HTML

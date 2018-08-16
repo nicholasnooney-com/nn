@@ -12,6 +12,8 @@ or an expansion of a project are all reasons to continue a post. This post is
 part of the series *Developing a Custom Theme*, which details all of the
 steps that resulted in the creation of this site's theme.
 
+<!-- excerpt separator -->
+
 There are small differences between a post in a series and a post that is not
 part of a series. The only difference to cause a normal post to become a part of
 a series is to include the special tag `series:` in the front matter of the
