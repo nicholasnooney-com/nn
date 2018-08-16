@@ -1,6 +1,7 @@
 _site
 .sass-cache
 .jekyll-metadata
+.jekyll-cache
 
 env/ssl/devCA.crt
 env/ssl/devCA.key

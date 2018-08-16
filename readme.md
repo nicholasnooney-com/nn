@@ -13,7 +13,7 @@ necessary.
 Run `rake` to list all targets.
 
 - `author`: Authoring content for the site
-    - `post[date,title,category]`: Create a new post
+    - `post[title,draft,date]`: Create a new post
     - `publish`: Publish changes (git push origin HEAD)
 - `ci`: Building and Deploying Targets (Used in dev and prod)
     - `build`: Build the site
