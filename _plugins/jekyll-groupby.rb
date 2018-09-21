@@ -32,6 +32,8 @@ module Jekyll
         @key = key
         @config = site.config["jekyll-groupby"]
 
+        Jekyll.logger.info "Jekyll Groupby:", " ... #{title}"
+
         # Generate slug for the title
         @slug = Utils.slugify(title)
 
@@ -107,10 +109,13 @@ module Jekyll
         @posts = site.posts
         @group_pages = []
 
+        Jekyll.logger.info "Jekyll Groupby:", "Begin Generation..."
+
         @site.config["jekyll-groupby"] = @config
         process
         @site.pages.concat(@group_pages)
-        # @site.config["series"] = @series
+
+        Jekyll.logger.info "Jekyll Groupby:", "Generation complete!"
       end
 
       # To process each group archive, loop over each value and create a new
@@ -119,7 +124,7 @@ module Jekyll
       def process
         @config["groups"].each do |key, config|
 
-          Jekyll.logger.info "jekyll-groupby:", "Creating pages for \"#{key}\"."
+          Jekyll.logger.info "Jekyll Groupby:", "Creating pages for \"#{key}\"."
 
           groupBy(key).each do |val, posts|
             @group_pages << GroupbyPage.new(@site, val, key, posts) unless val.nil?

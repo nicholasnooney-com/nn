@@ -2,7 +2,7 @@
 layout: post
 title: "Using C and C++ Together"
 date: 2018-09-01
-categories: code
+category: code
 tags: [c, cpp]
 ---
 
