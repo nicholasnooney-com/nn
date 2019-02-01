@@ -6,7 +6,7 @@ categories: app-idea
 tags: meal-time
 ---
 
-### Introduction
+# Introduction
 
 Mealtime is an application meant to assist in creating a meal from multiple
 recipes. It will organize the steps of multiple recipes into a coherent set of
@@ -25,7 +25,7 @@ time. Some of the additional features of the app are:
   three minutes to dice an onion, the recipe will adjust the preparation time to
   show how long it takes you to chop an onion.
 
-##### Special Secondary Features
+## Special Secondary Features
 
 - Share Mode. Share your recipes with friends and family on all major social
   media platforms. Discover meals via those sites and easily import them into
@@ -46,27 +46,27 @@ time. Some of the additional features of the app are:
 - Recipe importer. Using Natural Language Processing, read the text of the
   recipe and convert it to the appropriate format for the application.
 
-### Prior Art
+# Prior Art
 
-##### PepperPlate
+## PepperPlate
 
 PepperPlate provides many of the same features that would be integrated into
 this app. It provides a 'Cook Mode' that allows multiple recipes to be made
 simultaneously. However, the integrations between steps is lacking; it only
 allows for one global timer to be set while viewing only one recipe at a time.
 
-### Inspiration
+# Inspiration
 
-##### Google Maps
+## Google Maps
 
 Google Maps provides an intuitive UI for determining exactly how to get from
 point A to point B. With it's step-by-step directions, traffic analysis, and
 clear UI, it makes travelling as easy as possible. For Mealtime, point A happens
 to be a collection of ingredients and point B happens to be a beautiful meal.
 
-### Technical Details
+# Technical Details
 
-##### Recipe Format
+## Recipe Format
 
 This app will require a special format for storing recipes so that the app can
 reorder steps and create a coherent recipe.

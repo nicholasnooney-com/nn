@@ -6,7 +6,7 @@ categories: app-idea
 tags: ticket-splitter
 ---
 
-### Introduction
+# Introduction
 
 I was out one day with a group of friends eating at a restaurant called _Ye Old
 Forge_, a place we frequently visit because some of our group are trying to
@@ -24,8 +24,8 @@ allow you to take a picture of a receipt and split its items amongst the members
 of your party, or adhering to the rules of the establishment you choose to eat
 at.
 
-### Prior Art
+# Prior Art
 
-### Inspiration
+# Inspiration
 
-### Technical Details
+# Technical Details

@@ -38,7 +38,7 @@ we need at the trading post." I used to ask if I could go with them, but they
 would end up right back at stage one, "It's too dangerous." It's too unfair.
 
 So I fall asleep to the sound of my mother's voice, nostalgic for the golden
-days, and I begin to dream about the world outside of the small hole 
+days, and I begin to dream about the world outside of the small hole.
 
 # Future Points
 

@@ -15,7 +15,7 @@ development environment.
 
 <!-- excerpt separator -->
 
-### Beginning with Rake
+# Beginning with Rake
 
 After installing Rake, all I had to do was create a `Rakefile` in the root of
 my site. I've never programmed in Ruby before, but it was pretty easy to get
@@ -23,7 +23,7 @@ started. All that is needed is the name of a task and a useful description,
 and then we can run a command. Prior to using the rakefile, I had to run a long
 command every time I wanted to build my site.
 
-```
+```bash
 bundle exec jekyll build
 ```
 
@@ -92,7 +92,7 @@ task :default => [:list_tasks]
 Voila! Now I can run `rake` whenever I forget what I can do, and Rake will tell
 me!
 
-### Taking Rake to the Next Level
+# Taking Rake to the Next Level
 
 Now that I've gotten setup with Rake, I can expand upon it to perform more
 complicated tasks. Jekyll recommends using HTMLProofer to verify that all the

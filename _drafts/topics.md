@@ -7,6 +7,7 @@ tags:
 ---
 
 projects
+
 - Cartographic Learning
 - YPP Solvers
 - sjoslag
@@ -14,11 +15,13 @@ projects
 - Personal Home Library
 
 writings
+
 - Two plumbers working on missiles (ala Mario and Luigi)
 - Storytelling
 - Ereviv
 
 this-site
+
 - Posts in a Series
 - NoScript / Minimal JS
 - Assets 3 Pipeline
@@ -28,4 +31,5 @@ this-site
 - Open Graph for sharing contents
 
 technologies
+
 - Godot engine

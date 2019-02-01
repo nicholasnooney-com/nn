@@ -301,7 +301,7 @@ use these variables to control what to show.
 ```html
 {% raw %}
 <hr>
-<section class="series-footer">    
+<section class="series-footer">
     ...
 
     <nav class="pagination is-centered" role="navigation"

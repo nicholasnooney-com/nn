@@ -15,7 +15,7 @@ site. The theme's source code is posted on [GitHub][theme-github].
 
 <!-- excerpt separator -->
 
-### How do Jekyll Themes Work?
+# How do Jekyll Themes Work?
 
 Jekyll uses Ruby Gems to store themes. A theme is a collection of named HTML
 files with [Liquid][liquid-docs] markup to insert the site content. The behavior
@@ -70,14 +70,14 @@ the content. The documentation is extensive and provides detailed examples of
 how to structure the site's HTML. Take a look at Bulma's documentation if you
 would like to understand the specifics of each layout.
 
-### The Layouts of this Theme
+# The Layouts of this Theme
 
 In order to fully explain how this theme was developed, I will explain how I
 built the layouts included in this theme. Currently, my goal for this theme is
 to obtain feature parity with the `minima` theme. In future posts in this
 series, I will explain how these basic themes changed to fit my needs.
 
-#### default.html
+## default.html
 
 Every theme starts with a base layout. This layout will contain the core
 identity that all other layouts will tweak. In this theme, the base layout is
@@ -181,7 +181,7 @@ Altogether, this code makes for a customizable default template that suits the
 needs of this site. The full code for this template is available
 [here][layout-default].
 
-#### post.html
+## post.html
 
 The `post` template defines the main content for posts (including this one). As
 specified in the introduction, this template inherits the `default` template
@@ -253,7 +253,7 @@ The `post` layout is heavily focused on text. In a future iteration I hope to
 add better support for images and other media types as well. You can see the
 full code of the post template [here][layout-post].
 
-#### page.html
+## page.html
 
 The `page` template is identical to the `post` layout, except it can specify a
 long-title to use instead of the normal title. This is due to the fact that any
@@ -292,7 +292,7 @@ the site. Below is the content of the `page` template:
 
 You can see the full code of the page template [here][layout-page].
 
-#### front.html
+## front.html
 
 The `front` layout is designed to be the homepage of this website. It's intent is to
 provide a helpful summary of the site's content and serve as an entry point to explore

@@ -13,13 +13,13 @@ have answered these questions to provide a variety of solutions.
 
 <!-- excerpt separator -->
 
-### How to Get Started: Transform an Idea into a Prototype
+# How to Get Started: Transform an Idea into a Prototype
 
 This series of questions will help transform an idea into a prototype design.
 The more prepared answers you have to these questions, then the more prepared
 the application will be to evolve after the first prototype.
 
-#### 1. What do you want to do? (Developing Requirements)
+## 1. What do you want to do? (Developing Requirements)
 
 The first thing I find helpful is organizing what goals the application should
 accomplish. Corportations spend millions investing in mission statements to

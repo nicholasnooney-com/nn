@@ -32,13 +32,14 @@ following components:
 
 Let me explain each of these parts in further detail.
 
-## The Example Component
+# The Example Component
 
 For the purpose of making this article easier to understand, we'll implement the
 following component:
 
 A counter module that can be used to count things. It supports the following
 interface:
+
 - `int counter(void)`: Register a new counter with a count of 0. Returns the id
   of the new counter.
 - `int count(int ctr, int amt)`: Increment _ctr_ by _amt_. Returns the new count

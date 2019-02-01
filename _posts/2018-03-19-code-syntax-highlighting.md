@@ -15,6 +15,5 @@ with [Nord][nord-link].
 
 <!-- excerpt separator -->
 
-
 [nord-link]: https://arcticicestudio.github.io/nord/
 [post-link]: {{ site.baseurl }}{% link _posts/2018-01-21-customizing-this-site.md %}

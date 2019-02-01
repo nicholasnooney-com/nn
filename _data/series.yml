@@ -7,3 +7,9 @@
     posts, adding Code Syntax Highlighting, and other features to complement the
     theme of this site. As I update the theme, I will add more posts to this
     series. You can always grab the latest copy of this theme's code at GitHub.
+- name: nooncraft
+  content: >
+    This series of posts details the process I completed to make a Minecraft
+    inspired open-world game. All of the posts detail the design,
+    implementation, and testing of this application. You can find the latest
+    copy of this project on GitHub.

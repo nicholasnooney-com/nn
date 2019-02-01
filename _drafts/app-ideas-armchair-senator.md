@@ -6,10 +6,10 @@ categories: app-idea
 tags: armchair-senator
 ---
 
-### Introduction
+# Introduction
 
-### Prior Art
+# Prior Art
 
-### Inspiration
+# Inspiration
 
-### Technical Details
+# Technical Details

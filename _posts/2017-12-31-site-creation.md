@@ -64,7 +64,7 @@ domain and continuous integration set up.
 - Hosting: GitHub Pages
 - Continuous Integrations: Travis CI
 
-#### Some Time Later
+# Some Time Later
 
 I discovered Netlify, which provides free hosting of static sites (similar to
 GitHub) and it contains its own continuous integration system. Although I
