@@ -13,7 +13,7 @@ featured-alt: "Lake Tahoe"
 
 In order to make the site stand out, and also to support media types most
 common to the internet, I've quickly styled up a featured image container. This
-code uses no additional plugins, and results in a simple styled image at the
+code uses the assets plugin, and results in a simple styled image at the
 beginning of each post.
 
 <!-- excerpt separator -->
