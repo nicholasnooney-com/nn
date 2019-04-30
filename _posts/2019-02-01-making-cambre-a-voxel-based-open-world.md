@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Making Nooncraft: a voxel-based open-world game"
+title: "Making Cambre: a voxel-based open-world game"
 date: 2019-02-01 13:56:26 -0500
 category: code
 tags: [cpp, opengl]
-series: "Nooncraft"
+series: "Cambre"
 ---
 
 In my day-to-day work, I don't get to work too much with user-facing code. Such
@@ -80,4 +80,4 @@ This project uses the following libraries:
 If you would like to see the code as it has evolved, check it out on
 [GitHub][github-repo].
 
-[github-repo]: https://github.com/nnooney/nooncraft
+[github-repo]: https://github.com/nnooney/cambre
