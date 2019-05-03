@@ -2,6 +2,8 @@
 task :default => [:list_tasks]
 
 require 'html-proofer'
+require 'tempfile'
+require 'fileutils'
 
 # Load configuration variables, and provide defaults for unspecified variables
 load 'env/_rake_config.rb' if File.exist?('env/_rake_config.rb')
@@ -72,6 +74,7 @@ namespace "dev" do
     if defined?($SSL_CONF).nil? || defined?($SSL_CERT).nil? || defined?($SSL_KEY).nil?
       puts "Error: Missing Variables"
       puts "Please ensure $SSL_CONF, $SSL_CERT, and $SSL_KEY are defined"
+      puts "in env/_rake_config.rb"
       exit 1
     end
 
@@ -194,6 +197,83 @@ namespace "author" do
 
     %x{git add -A && git commit -m "Autopush by Rakefile at #{time}"}
     %x{git push origin HEAD}
+  end
+end
+
+# Tasks related to working with the theme
+namespace "theme" do
+  desc 'Set the theme source (gem, dev)'
+  task :source, [:src, :path] do |t, args|
+    # Validate arguments
+    if args.src == nil then
+      puts "Error: No source provided"
+      puts "Provide a source for the theme gem. Use one of the following:"
+      puts "  - gem: Use the gem available on rubygems"
+      puts "  - dev: Use the gem at the path provided"
+      exit 1
+    end
+
+    if (args.src != "gem" and args.src != "dev") then
+      puts "Error: Invalid source provided"
+      puts "Provide a source for the theme gem. Use one of the following:"
+      puts "  - gem: Use the gem available on rubygems"
+      puts "  - dev: Use the gem at the path provided"
+      exit 1
+    end
+
+    if (args.src == "dev" and args.path == nil) then
+      puts "Error: No path provided, required by dev source"
+      puts "Provide a path to the theme if using the dev source"
+      exit 1
+    end
+
+    gemfile = "Gemfile"
+    if File.exist?(gemfile) then
+      # Update the theme gem source by using a temporary file
+      tmpfile = Tempfile.new('Gemfile.tmp')
+      begin
+        themegem = ""
+        foundflag = false
+        File.open(gemfile) do |f|
+          f.each_line do |line|
+
+            # If we have found the line to modify, parse it here
+            if (foundflag) then
+              newline = line.split(",")[0].strip
+              themegem = newline.split[1]
+              if (args.src == "dev") then
+                newline << ", :path => \"" + args.path + "\""
+              end
+              tmpfile.puts newline
+              foundflag = false
+
+            # Or if the line is the special line "# Theme Gem", then the next
+            # line is our theme gem
+            elsif (line.eql?("# Theme Gem\n")) then
+              foundflag = true
+              tmpfile.puts line
+
+            # Otherwise copy the line as-is to the output file
+            else
+              tmpfile.puts line
+            end
+          end
+        end
+
+        # Copy the temporary file to the Gemfile
+        tmpfile.close
+        FileUtils.mv(tmpfile.path, gemfile)
+      ensure
+        tmpfile.close
+        tmpfile.unlink
+      end
+
+      # Run bundle update to update the Gemfile.lock with the new source
+      sh 'bundle update --local --conservative ' + themegem
+    else
+      puts "Error: Cannot locate Gemfile"
+      exit 1
+    end
   end
 end
 
