@@ -64,7 +64,7 @@ layout. As I discover the need for more types of layouts, I will add them to
 this site and detail how they work.
 
 A final note about the site's theme: the design of this site uses [Bulma][bulma]
-to manage layout and styling. While its not the most flexible CSS framework,
+to manage layout and styling. While its not the most flexible CSS framework
 available, it does provide plenty of customization and allows me to focus on
 the content. The documentation is extensive and provides detailed examples of
 how to structure the site's HTML. Take a look at Bulma's documentation if you

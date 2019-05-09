@@ -124,7 +124,7 @@ module Jekyll
       def process
         @config["groups"].each do |key, config|
 
-          Jekyll.logger.info "Jekyll Groupby:", "Creating pages for \"#{key}\"."
+          Jekyll.logger.info "Jekyll Groupby:", "Creating pages for \"#{key}\":"
 
           groupBy(key).each do |val, posts|
             @group_pages << GroupbyPage.new(@site, val, key, posts) unless val.nil?

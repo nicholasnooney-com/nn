@@ -5,11 +5,10 @@ date: 2018-08-15 21:07:43 -0400
 category: web
 tags: jekyll-theme this-site
 series: "Developing a Custom Theme"
-featured-image: tahoe.jpg
-featured-alt: "Lake Tahoe"
+featured-image:
+    src: tahoe.jpg
+    alt: "Lake Tahoe"
 ---
-
-{% include components/featured-image.html %}
 
 In order to make the site stand out, and also to support media types most
 common to the internet, I've quickly styled up a featured image container. This
