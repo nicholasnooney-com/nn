@@ -61,9 +61,11 @@ strict_front_matter: true
 jekyll-groupby:
   permalink: ":group/:name.html"
   groups:
-    series:
+    - name: "series"
       layout: "group"
-    category:
+    - name: "category"
+      layout: "group"
+    - name: "tags"
       layout: "group"
 
 assets:

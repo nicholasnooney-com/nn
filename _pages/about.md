@@ -15,13 +15,17 @@ technologies:
     drivers and programs to certify hardware interfaces.
   - At St. Olaf College, I wrote a C++ program to emulate the basic features
     of the 2001 GameBoy Advance game _Advance Wars_. It uses OpenGL to render
-    graphics. The program is called `Pixel Wars` and you can view it
-    [here][pixel wars].
+    graphics. The program is called `Pixel Wars`. Unfortunately, the code
+    resides on the St. Olaf CS Wiki and is only accessible from the college
+    network.
+  - I'm currently developing `Cambre`, an open-world voxel game inspired loosely
+    by Minecraft. The series _Cambre_ follows the development of this
+    application.
 - `Python`
   - I've implemented a PyQt based program for work that performs configuration
     management functions for development objects. It uses peewee to interface
-    with a SQL database, manages files with libgit and pygit2. To help with
-    maintainability, the code base uses pytest and pylint.
+    with a SQL database. To help with maintainability, the code base uses pytest
+    and pylint.
   - Using Natural Language Processing via SpaCy, I helped author a program
     that evaluates propositional logic in the English language. Given a series
     of statements and a conclusion, it will determine the validity (Confirmed,
