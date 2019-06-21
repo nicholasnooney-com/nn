@@ -35,7 +35,7 @@ module Jekyll
         @config = config
         @posts = posts
 
-        Jekyll.logger.info "Page:", " ... #{title}"
+        Jekyll.logger.debug "Page:", " ... #{title}"
 
         # Generate slug for the title
         @slug = Utils.slugify(title)
@@ -106,7 +106,8 @@ module Jekyll
         @posts = site.posts
         @group_pages = []
 
-        Jekyll.logger.info "Jekyll Groupby:", "Begin Generation..."
+        Jekyll.logger.info  "Jekyll Groupby:", "Generating group pages"
+        Jekyll.logger.debug "Jekyll Groupby:", "Begin Generation..."
 
         # Ensure expected config variables are present
         @site.config["jekyll-groupby"] = @config
@@ -122,7 +123,7 @@ module Jekyll
         # rendered by later stages in the Jekyll pipeline.
         @site.pages.concat(@group_pages)
 
-        Jekyll.logger.info "Jekyll Groupby:", "Generation complete!"
+        Jekyll.logger.debug "Jekyll Groupby:", "Generation complete!"
       end
 
       # To process each group archive, loop over each value and create a new
@@ -130,7 +131,7 @@ module Jekyll
       # the groupby key present.
       def process
         @config["groups"].each do |config|
-          Jekyll.logger.info "Group:", "Creating pages for \"#{config["name"]}\":"
+          Jekyll.logger.debug "Group:", "Creating pages for \"#{config["name"]}\":"
 
           # Ensure the default variables are present in the config at the group
           # level.
@@ -190,7 +191,10 @@ module Jekyll
         filtered_posts.each do |p|
           pval = p.data[key]
 
-          if pval.is_a? Array
+          if pval.nil?
+            Jekyll.logger.debug "Post:", " !!! Skipping \"#{p.data["title"]}\""
+            next
+          elsif pval.is_a? Array
             pval.each do |val|
               addToHash(val, p)
             end

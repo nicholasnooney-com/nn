@@ -24,21 +24,31 @@ $SERVER_PORT ||= "4000"
 # and on the server as part of the continuous integration pipeline.
 namespace "ci" do
   desc 'Build the Site (Incremental)'
-  task :build, [:env] do |t, args|
+  task :build, [:env, :verbose] do |t, args|
     # Development is the default environment. This is to match the same behavior
     # as Jekyll. Other tasks depend on "dev" as the default environment.
-    args.with_defaults(:env => 'dev')
+    args.with_defaults(:env => 'dev', :verbose => false)
     configFiles = [
         "_config.yml"
     ]
     if File.exist?("env/_config_#{args.env}.yml") then
         configFiles.push("env/_config_#{args.env}.yml")
     end
-    jekyll('build -d ' + $SITE_DIR + ' --config ' + configFiles.join(","))
+
+    cmd = 'build -d ' + $SITE_DIR + ' --config ' + configFiles.join(",")
+    if args.verbose
+      cmd += ' -V'
+    end
+
+    jekyll(cmd)
   end
 
   desc 'Build the Site (From Scratch)'
-  task :rebuild, [:env] => [:clean, :build]
+  task :rebuild, [:env] do |t, args|
+    args.with_defaults(:env => 'dev')
+    Rake::Task["ci:clean"].invoke()
+    Rake::Task["ci:build"].invoke(args.env, false)
+  end
 
   desc 'Test the currently built Site'
   task :test do
@@ -56,7 +66,11 @@ namespace "ci" do
   end
 
   desc 'Deploy the Site (clean, build, test)'
-  task :deploy, [:env] => [:clean, :build, :test] do
+  task :deploy, [:env] do |t, args|
+    args.with_defaults(:env => 'prod')
+    Rake::Task["ci:clean"].invoke()
+    Rake::Task["ci:build"].invoke(args.env, true)
+    Rake::Task["ci:test"].invoke()
     puts "Build Complete!"
   end
 
@@ -102,7 +116,8 @@ namespace "dev" do
   # The :preview task intentionally rebuilds the site with the default "dev"
   # environment.
   desc 'Preview the Site'
-  task :preview => ["ci:rebuild"] do
+  task :preview do
+    Rake::Task["ci:rebuild"].invoke("dev", false)
     opts = [
         "-R env/server/config.ru",
         "-a #{$SERVER_ADDR}",
@@ -117,6 +132,13 @@ namespace "dev" do
     bundle_exec("thin start " + opts.join(" "))
   end
   task :serve => [:preview]
+
+  # The :build task in this section performs a one-off verbose build with the
+  # "dev" environment.
+  desc 'Build the site with debug'
+  task :build do
+    Rake::Task["ci:build"].invoke("dev", true)
+  end
 end
 
 # Tasks related to authoring content for the site
@@ -280,7 +302,9 @@ end
 # Tasks in the main namespace
 namespace "m" do
   desc 'Shorthand for ci:deploy'
-  task :deploy, [:env] => ["ci:deploy"]
+  task :deploy, [:env] do |t, args|
+    Rake::Task["ci:deploy"].invoke(args.env)
+  end
 
   desc 'Shorthand for author:post'
   task :post, [:title, :draft, :date] do |t, args|
