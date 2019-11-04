@@ -100,7 +100,7 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sprockets (4.0.0)
+    sprockets (3.7.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     thin (1.7.2)
@@ -122,13 +122,13 @@ DEPENDENCIES
   html-proofer
   jekyll
   jekyll-assets (>= 3.0)
-  jekyll-feed (>= 0.6)
+  jekyll-feed (>= 0.12)
   jekyll-theme-nn
   mini_magick
   rack
   rake (~> 12.0)
+  sprockets (~> 3.7)
   thin
-  tzinfo-data
 
 RUBY VERSION
    ruby 2.6.3p62
