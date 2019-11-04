@@ -25,7 +25,9 @@ technologies:
   - I've implemented a PyQt based program for work that performs configuration
     management functions for development objects. It uses peewee to interface
     with a SQL database. To help with maintainability, the code base uses pytest
-    and pylint.
+    and pylint. This program has been used to coordinate the effort of several
+    developers and saved time during development, improved recovery times, and
+    assisted in maintaining a configured environment for system testing.
   - Using Natural Language Processing via SpaCy, I helped author a program
     that evaluates propositional logic in the English language. Given a series
     of statements and a conclusion, it will determine the validity (Confirmed,
